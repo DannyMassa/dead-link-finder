@@ -15,6 +15,5 @@ RUN go build -tags netgo -o main ./
 
 
 FROM alpine:latest as app
+RUN apk --no-cache add ca-certificates curl openssh-client git
 COPY --from=builder /app/main /usr/bin/main
-ENTRYPOINT [ "/usr/bin/main" ]
-CMD []
