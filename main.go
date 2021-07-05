@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/DannyMassa/dead-link-finder/services"
 	flag "github.com/spf13/pflag"
+	"os"
 )
 
 var (
@@ -40,6 +41,7 @@ func main() {
 	}
 
 	if !pass {
-		panic("Some URLs are not accessible")
+		os.Exit(1)
 	}
+	os.Exit(0)
 }
