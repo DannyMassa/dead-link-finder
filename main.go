@@ -19,12 +19,10 @@ var (
 )
 
 func main() {
-	// Flags
 	flag.StringArrayVar(&fileEndings, "file_endings", DefaultFileEndings, "File Extensions to look for")
 	flag.StringArrayVar(&directories, "directories", DefaultDirectories, "Directories to search for files")
 	flag.Parse()
 
-	// URL Search and Check
 	for _, directory := range directories {
 		fmt.Printf("%s\n", directory)
 		files = directoryService.FindFiles(directory, fileEndings)
