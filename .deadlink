@@ -1,0 +1,17 @@
+fileExtensions:
+  - ".markdown"
+  - ".mdown"
+  - ".mkdn"
+  - ".md"
+  - ".mkd"
+  - ".mdwn"
+  - ".mdtxt"
+  - ".mdtext"
+  - ".text"
+  - ".txt"
+  - ".rmd"
+  - ".rst"
+directories:
+  - "./"
+ignored:
+  - "https://github.com/dannymassaseviltwin"
