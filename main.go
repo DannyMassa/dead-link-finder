@@ -24,12 +24,16 @@ type Config struct {
 }
 
 func main() {
+	c := &Config{}
 	buf, err := ioutil.ReadFile(".deadlink")
 	if err != nil {
-		panic("Could not find .deadlink file")
+		fmt.Printf("Could not find .deadlink file, using defaults")
+		c.FileExtensions = []string{".markdown", ".mdown", ".mkdn", ".md", ".mkd", ".mdwn", ".mdtxt", ".mdtext",
+			".text", ".txt", ".rmd", ".rst"}
+		c.Directories = []string{"./"}
+		c.Ignored = []string{}
 	}
 
-	c := &Config{}
 	err = yaml.Unmarshal(buf, c)
 	if err != nil {
 		panic("Could not parse .deadlink file")
