@@ -1,4 +1,4 @@
-: "${LINTER_VERSION:="0.0.5"}"
+: "${LINTER_VERSION:="0.0.6"}"
 
 wget https://github.com/DannyMassa/dead-link-finder/releases/download/${LINTER_VERSION}/dead-link-linter-${LINTER_VERSION}-linux-amd64.tar.gz
 tar -xvf dead-link-linter-${LINTER_VERSION}-linux-amd64.tar.gz
