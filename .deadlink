@@ -13,5 +13,4 @@ fileExtensions:
   - ".rst"
 directories:
   - "./"
-ignored:
-  - "https://github.com/dannymassaseviltwin"
+ignored: []
