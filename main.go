@@ -27,7 +27,7 @@ func main() {
 	c := &Config{}
 	buf, err := ioutil.ReadFile(".deadlink")
 	if err != nil {
-		fmt.Printf("Could not find .deadlink file, using defaults")
+		fmt.Printf("Could not find .deadlink file, using defaults\n")
 		c.FileExtensions = []string{".markdown", ".mdown", ".mkdn", ".md", ".mkd", ".mdwn", ".mdtxt", ".mdtext",
 			".text", ".txt", ".rmd", ".rst"}
 		c.Directories = []string{"./"}
@@ -53,7 +53,7 @@ func main() {
 					fmt.Printf("        SUCCESS: %s\n", url)
 					successCount++
 				} else {
-					fmt.Printf("        FAIL: %s\n", url)
+					fmt.Printf("        FAILURE: %s\n", url)
 					failCount++
 					pass = false
 				}
@@ -61,7 +61,7 @@ func main() {
 		}
 	}
 
-	fmt.Printf("\n\nSUCCESS: %d     FAILED: %d     SKIPPED: %d\n", successCount, failCount, skipCount)
+	fmt.Printf("\n\nSUCCESS: %d     FAILURE: %d     SKIPPED: %d\n", successCount, failCount, skipCount)
 
 	if !pass {
 		os.Exit(1)
