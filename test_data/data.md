@@ -5,17 +5,5 @@ https://releases.ubuntu.com/20.04.2.0/ubuntu-20.04.2.0-desktop-amd64.iso
 https://github.com/dannymassaseviltwin
 https://releases.ubuntu.com/20.04.2.0/ubuntu-20.04.2.0-desktop-amd64.iso
 https://google.com
-http://www.foufos.gr
-https://www.foufos.gr
-http://foufos.gr
-http://www.foufos.gr/kino
-http://werer.gr
-http://t.co
-http://www.t.co
-https://www.t.co
-http://aa.com
-http://www.aa.com
-https://www.aa.com
-http://www.foufos
-http://foufos
-https://2001:0db8:85a3:0000:0000:8a2e:0370:7334/ipv6IsCool
+
+what happens when there is a [dog?](https://i.imgur.com/cyp2OG9.jpeg)

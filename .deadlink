@@ -13,4 +13,9 @@ fileExtensions:
   - ".rst"
 directories:
   - "./"
-ignored: []
+#  - "/Users/danma/Code/dead-link-report/"
+ignored:
+  - "https://review.opendev.org/airship/airshipctl"
+successLogs: true
+maxFailures: 100
+goldenURL: "https://google.com"
