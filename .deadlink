@@ -13,4 +13,8 @@ fileExtensions:
   - ".rst"
 directories:
   - "./"
-ignored: []
+ignored:
+  - "https://review.opendev.org/airship/airshipctl"
+successLogs: true
+maxFailures: 100
+goldenURL: "https://google.com"
