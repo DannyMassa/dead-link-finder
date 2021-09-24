@@ -13,7 +13,6 @@ fileExtensions:
   - ".rst"
 directories:
   - "./"
-#  - "/Users/danma/Code/dead-link-report/"
 ignored:
   - "https://review.opendev.org/airship/airshipctl"
 successLogs: true
