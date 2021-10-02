@@ -4,6 +4,13 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
+	"time"
+)
+
+var (
+	httpClient = http.Client{
+		Timeout: 10 * time.Second,
+	}
 )
 
 type URLService interface {
@@ -21,8 +28,8 @@ func (u URLServiceImpl) URLScraper(file string) []string {
 	}
 	fileString := string(fileByteSlice)
 	var urlList []string
-	rex := regexp.MustCompile(`(http|https|ftp|mailto|file|data|irc):(//([0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+@)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(:[0-9]+)?)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(\?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?(#[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?`) //nolint
 
+	rex := regexp.MustCompile(`(http|https|ftp|mailto|file|data|irc):(//([0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+@)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(:[0-9]+)?)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(\?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?(#[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?`) //nolint
 	urls = rex.FindAllStringSubmatch(fileString, -1)
 
 	for i := 1; i < len(urls); i++ {
@@ -33,7 +40,7 @@ func (u URLServiceImpl) URLScraper(file string) []string {
 }
 
 func (u URLServiceImpl) LinkLivenessChecker(url string) bool {
-	resp, err := http.Get(url) //nolint
+	resp, err := httpClient.Get(url) //nolint
 	if err != nil || resp.StatusCode/100 == 4 || resp.StatusCode/100 == 5 {
 		return false
 	}

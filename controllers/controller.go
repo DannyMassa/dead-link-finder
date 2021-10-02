@@ -40,8 +40,8 @@ func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
 		if strings.ToLower(tmpUrls[i].Directory) == strings.ToLower(tmpUrls[j].Directory) {
 			// If Directory == Directory, sort by File
 			if strings.ToLower(tmpUrls[i].File) == strings.ToLower(tmpUrls[j].File) {
-				// If Directory == Directory && File == File, sort by Line Number
-				if tmpUrls[i].LineNumber < tmpUrls[j].LineNumber {
+				// If Directory == Directory && File == File, sort alphabetically
+				if strings.ToLower(tmpUrls[i].Link) < strings.ToLower(tmpUrls[j].Link) {
 					less = true
 				} else {
 					less = false
@@ -68,7 +68,7 @@ func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
 		}
 	}
 
-	for i := 0; i < len(tmpUrls) - 1; i++ {
+	for i := 0; i < len(tmpUrls); i++ {
 		if i == 0 {
 			fmt.Printf("%s\n", tmpUrls[i].Directory)
 			fmt.Printf("    %s\n", tmpUrls[i].File)
@@ -108,6 +108,7 @@ func (l *LinkControllerImpl) Run(config *types.Config) {
 func (l *LinkControllerImpl) manageResults() {
 	for p := range l.resultsChan {
 		l.results = append(l.results, p)
+		waitGroup.Done()
 	}
 }
 
@@ -129,7 +130,6 @@ func (l *LinkControllerImpl) fileSearch(directory string, file string, config *t
 }
 
 func (l *LinkControllerImpl) urlCheck(directory string, file string, url string, config *types.Config) {
-	defer waitGroup.Done()
 	var tmp = types.URL{
 		Link:      url,
 		Directory: directory,
