@@ -1,20 +1,16 @@
 <h1 align="center">
   <a href="https://github.com/DannyMassa/dead-link-linter">
-    <img src="../dead-link-linter/docs/images/logo.png" alt="Logo" width="640" height="640">
+    <img src="docs/images/logo.png" alt="Logo" width="640" height="640">
   </a>
 </h1>
 
 <div align="center">
   Dead Link Linter
   <br />
-  <a href="#about"><strong>Explore the screenshots »</strong></a>
-  <br />
-  <br />
   <a href="https://github.com/DannyMassa/dead-link-linter/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
   ·
   <a href="https://github.com/DannyMassa/dead-link-linter/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
 </div>
-
 <div align="center">
 <br />
 
@@ -23,9 +19,11 @@
 [![build](https://img.shields.io/github/workflow/status/DannyMassa/dead-link-linter/Continuous%20Integration%20Gate)](https://img.shields.io/github/workflow/status/DannyMassa/dead-link-linter/Continuous%20Integration%20Gate)
 [![Go](https://img.shields.io/github/go-mod/go-version/dannymassa/dead-link-linter)](https://img.shields.io/github/go-mod/go-version/dannymassa/dead-link-linter)
 [![release](https://img.shields.io/github/v/release/DannyMassa/dead-link-linter)](https://img.shields.io/github/v/release/DannyMassa/dead-link-linter)
+</div>
 
 <details open="open">
 <summary>Table of Contents</summary>
+
 
 - [About](#about)
   - [Built With](#built-with)
