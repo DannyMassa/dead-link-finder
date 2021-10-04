@@ -1,20 +1,9 @@
-fileExtensions:
-  - ".markdown"
-  - ".mdown"
-  - ".mkdn"
-  - ".md"
-  - ".mkd"
-  - ".mdwn"
-  - ".mdtxt"
-  - ".mdtext"
-  - ".text"
-  - ".txt"
-  - ".rmd"
-  - ".rst"
 directories:
   - "./"
+fileExtensions:
+  - ".md"
+goldenURL: "https://google.com"
 ignored:
   - "https://review.opendev.org/airship/airshipctl"
+maxFailures: 0
 successLogs: true
-maxFailures: 100
-goldenURL: "https://google.com"
