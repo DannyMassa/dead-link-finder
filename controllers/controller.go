@@ -3,12 +3,13 @@ package controllers
 import (
 	"errors"
 	"fmt"
-	"github.com/DannyMassa/dead-link-linter/services"
-	"github.com/DannyMassa/dead-link-linter/types"
 	"log"
 	"sort"
 	"strings"
 	"sync"
+
+	"github.com/DannyMassa/dead-link-linter/services"
+	"github.com/DannyMassa/dead-link-linter/types"
 )
 
 var (
@@ -36,9 +37,9 @@ func (l *LinkControllerImpl) printResults(config *types.Config) error {
 	sort.SliceStable(tmpUrls, func(i, j int) bool {
 		less := false
 		// Sort by Directory
-		if strings.ToLower(tmpUrls[i].Directory) == strings.ToLower(tmpUrls[j].Directory) {
+		if strings.EqualFold(tmpUrls[i].Directory, tmpUrls[j].Directory) { //nolint
 			// If Directory == Directory, sort by File
-			if strings.ToLower(tmpUrls[i].File) == strings.ToLower(tmpUrls[j].File) {
+			if strings.EqualFold(tmpUrls[i].File, tmpUrls[j].File) { //nolint
 				// If Directory == Directory && File == File, sort alphabetically
 				if strings.ToLower(tmpUrls[i].Link) < strings.ToLower(tmpUrls[j].Link) {
 					less = true
@@ -119,7 +120,6 @@ func (l *LinkControllerImpl) directorySearch(directory string, config *types.Con
 	for _, file := range files {
 		l.fileSearch(directory, file, config)
 	}
-
 }
 
 func (l *LinkControllerImpl) fileSearch(directory string, file string, config *types.Config) {

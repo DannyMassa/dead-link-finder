@@ -2,10 +2,11 @@ package services
 
 import (
 	"fmt"
+	"io/ioutil"
+
 	"github.com/DannyMassa/dead-link-linter/types"
 	flag "github.com/spf13/pflag"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
 )
 
 type ParameterService interface {
@@ -15,7 +16,6 @@ type ParameterService interface {
 type ParameterServiceImpl struct{}
 
 func (p ParameterServiceImpl) SetConfig() *types.Config {
-
 	// Initialize config object and set defaults
 	defaultConfig := p.parseDefaultConfiguration()
 
@@ -30,8 +30,7 @@ func (p ParameterServiceImpl) SetConfig() *types.Config {
 	return &defaultConfig
 }
 
-func (p ParameterServiceImpl) rectifyConfigurations(priorityConfig types.Config, otherConfig types.Config) types.Config {
-
+func (p ParameterServiceImpl) rectifyConfigurations(priorityConfig types.Config, otherConfig types.Config) types.Config { //nolint
 	if len(priorityConfig.Directories) > 0 {
 		otherConfig.Directories = priorityConfig.Directories
 	}
@@ -73,12 +72,13 @@ func (p ParameterServiceImpl) parseCLIConfiguration() types.Config {
 func (p ParameterServiceImpl) parseDefaultConfiguration() types.Config {
 	return types.Config{
 		Directories: []string{"./"},
-		FileExtensions: []string{".markdown", ".mdown", ".mkdn", ".md", ".mkd", ".mdwn", ".mdtxt", ".mdtext", ".text", ".txt", ".rmd", ".rst"},
-		GoldenURL: "https://google.com",
-		Ignored: []string{},
+		FileExtensions: []string{".markdown", ".mdown", ".mkdn", ".md", ".mkd", ".mdwn", ".mdtxt", ".mdtext", ".text",
+			".txt", ".rmd", ".rst"},
+		GoldenURL:         "https://google.com",
+		Ignored:           []string{},
 		IndividualTimeout: 10,
-		MaxFailures: 0,
-		LogVerbosity: 1,
+		MaxFailures:       0,
+		LogVerbosity:      1,
 	}
 }
 
