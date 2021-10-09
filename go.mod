@@ -1,5 +1,8 @@
-module github.com/DannyMassa/dead-link-finder
+module github.com/DannyMassa/dead-link-linter
 
 go 1.15
 
-require gopkg.in/yaml.v2 v2.4.0
+require (
+	github.com/spf13/pflag v1.0.5
+	gopkg.in/yaml.v2 v2.4.0
+)

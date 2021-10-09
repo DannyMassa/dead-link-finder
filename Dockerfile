@@ -11,7 +11,7 @@ RUN go version
 RUN go mod download
 COPY . .
 RUN go test -v ./...
-RUN go build -tags netgo -o dead-link-finder ./
+RUN go build -tags netgo -o dead-link-linter ./
 
 
 FROM alpine:latest as app

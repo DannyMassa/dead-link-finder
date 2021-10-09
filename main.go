@@ -2,47 +2,31 @@ package main
 
 import (
 	"fmt"
-	"github.com/DannyMassa/dead-link-finder/controllers"
-	"github.com/DannyMassa/dead-link-finder/services"
-	"github.com/DannyMassa/dead-link-finder/types"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
 	"os"
 	"time"
+
+	"github.com/DannyMassa/dead-link-linter/controllers"
+	"github.com/DannyMassa/dead-link-linter/services"
 )
 
 var (
-	urlService services.URLService = &services.URLServiceImpl{}
+	urlService       services.URLService       = &services.URLServiceImpl{}
+	parameterService services.ParameterService = &services.ParameterServiceImpl{}
 )
 
 func main() {
 	start := time.Now()
-
-	c := &types.Config{}
-	buf, err := ioutil.ReadFile(".deadlink")
-
-	if err != nil {
-		fmt.Printf("Could not find .deadlink file, using defaults\n")
-		c.FileExtensions = []string{".markdown", ".mdown", ".mkdn", ".md", ".mkd", ".mdwn", ".mdtxt", ".mdtext",
-			".text", ".txt", ".rmd", ".rst"}
-		c.Directories = []string{"./"}
-		c.Ignored = []string{}
-	}
-
-	err = yaml.Unmarshal(buf, c)
-	if err != nil {
-		panic("Could not parse .deadlink file")
-	}
+	c := parameterService.SetConfig()
 
 	// Testing against golden URL
 	if !urlService.LinkLivenessChecker(c.GoldenURL) {
-		os.Exit(2)
+		os.Exit(5)
 	}
 
-	controllers.Controller.Run(c)
-	err = controllers.Controller.PrintResults(c)
+	err := controllers.Controller.Run(c)
 
 	elapsed := time.Since(start)
+
 	fmt.Printf("\nLinter finished in %s\n", elapsed)
 	if err != nil {
 		os.Exit(1)

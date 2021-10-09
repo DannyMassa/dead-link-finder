@@ -3,12 +3,13 @@ package controllers
 import (
 	"errors"
 	"fmt"
-	"github.com/DannyMassa/dead-link-finder/services"
-	"github.com/DannyMassa/dead-link-finder/types"
 	"log"
 	"sort"
 	"strings"
 	"sync"
+
+	"github.com/DannyMassa/dead-link-linter/services"
+	"github.com/DannyMassa/dead-link-linter/types"
 )
 
 var (
@@ -23,8 +24,7 @@ var (
 )
 
 type linkController interface {
-	PrintResults(config *types.Config) error
-	Run(c *types.Config)
+	Run(c *types.Config) error
 }
 
 type LinkControllerImpl struct {
@@ -32,14 +32,14 @@ type LinkControllerImpl struct {
 	results     []*types.URL
 }
 
-func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
+func (l *LinkControllerImpl) printResults(config *types.Config) error {
 	tmpUrls := l.results
 	sort.SliceStable(tmpUrls, func(i, j int) bool {
 		less := false
 		// Sort by Directory
-		if strings.ToLower(tmpUrls[i].Directory) == strings.ToLower(tmpUrls[j].Directory) {
+		if strings.EqualFold(tmpUrls[i].Directory, tmpUrls[j].Directory) { //nolint
 			// If Directory == Directory, sort by File
-			if strings.ToLower(tmpUrls[i].File) == strings.ToLower(tmpUrls[j].File) {
+			if strings.EqualFold(tmpUrls[i].File, tmpUrls[j].File) { //nolint
 				// If Directory == Directory && File == File, sort alphabetically
 				if strings.ToLower(tmpUrls[i].Link) < strings.ToLower(tmpUrls[j].Link) {
 					less = true
@@ -60,7 +60,7 @@ func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
 		return less
 	})
 
-	if config.SuccessLogs == false {
+	if config.LogVerbosity <= 1 {
 		for i := len(tmpUrls) - 1; i >= 0; i-- {
 			if tmpUrls[i].Result == "SUCCESS" {
 				tmpUrls = append(tmpUrls[:i], tmpUrls[i+1:]...)
@@ -93,7 +93,7 @@ func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
 	return nil
 }
 
-func (l *LinkControllerImpl) Run(config *types.Config) {
+func (l *LinkControllerImpl) Run(config *types.Config) error {
 	go l.manageResults()
 	waitGroup.Add(len(config.Directories))
 	for _, directory := range config.Directories {
@@ -102,6 +102,8 @@ func (l *LinkControllerImpl) Run(config *types.Config) {
 
 	waitGroup.Wait()
 	close(l.resultsChan)
+
+	return l.printResults(config)
 }
 
 // manageResults runs the serve loop, dispatching for checks that need it.
@@ -118,7 +120,6 @@ func (l *LinkControllerImpl) directorySearch(directory string, config *types.Con
 	for _, file := range files {
 		l.fileSearch(directory, file, config)
 	}
-
 }
 
 func (l *LinkControllerImpl) fileSearch(directory string, file string, config *types.Config) {
