@@ -3,8 +3,8 @@ package controllers
 import (
 	"errors"
 	"fmt"
-	"github.com/DannyMassa/dead-link-finder/services"
-	"github.com/DannyMassa/dead-link-finder/types"
+	"github.com/DannyMassa/dead-link-linter/services"
+	"github.com/DannyMassa/dead-link-linter/types"
 	"log"
 	"sort"
 	"strings"
@@ -23,8 +23,7 @@ var (
 )
 
 type linkController interface {
-	PrintResults(config *types.Config) error
-	Run(c *types.Config)
+	Run(c *types.Config) error
 }
 
 type LinkControllerImpl struct {
@@ -32,7 +31,7 @@ type LinkControllerImpl struct {
 	results     []*types.URL
 }
 
-func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
+func (l *LinkControllerImpl) printResults(config *types.Config) error {
 	tmpUrls := l.results
 	sort.SliceStable(tmpUrls, func(i, j int) bool {
 		less := false
@@ -60,7 +59,7 @@ func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
 		return less
 	})
 
-	if config.SuccessLogs == false {
+	if config.LogVerbosity <= 1 {
 		for i := len(tmpUrls) - 1; i >= 0; i-- {
 			if tmpUrls[i].Result == "SUCCESS" {
 				tmpUrls = append(tmpUrls[:i], tmpUrls[i+1:]...)
@@ -93,7 +92,7 @@ func (l *LinkControllerImpl) PrintResults(config *types.Config) error {
 	return nil
 }
 
-func (l *LinkControllerImpl) Run(config *types.Config) {
+func (l *LinkControllerImpl) Run(config *types.Config) error {
 	go l.manageResults()
 	waitGroup.Add(len(config.Directories))
 	for _, directory := range config.Directories {
@@ -102,6 +101,8 @@ func (l *LinkControllerImpl) Run(config *types.Config) {
 
 	waitGroup.Wait()
 	close(l.resultsChan)
+
+	return l.printResults(config)
 }
 
 // manageResults runs the serve loop, dispatching for checks that need it.
