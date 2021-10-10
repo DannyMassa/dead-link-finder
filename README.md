@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://github.com/DannyMassa/dead-link-linter">
-    <img src="docs/images/logo.png" alt="Logo" width="640" height="640">
+    <img src="docs/images/logo.png" alt="Logo" width="320" height="320">
   </a>
 </h1>
 
@@ -17,7 +17,6 @@
 [![license](https://img.shields.io/github/license/DannyMassa/dead-link-linter.svg?style=flat-square)](LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/DannyMassa/dead-link-linter)](https://goreportcard.com/report/github.com/DannyMassa/dead-link-linter)
 [![build](https://img.shields.io/github/workflow/status/DannyMassa/dead-link-linter/Continuous%20Integration%20Gate)](https://img.shields.io/github/workflow/status/DannyMassa/dead-link-linter/Continuous%20Integration%20Gate)
-[![Go](https://img.shields.io/github/go-mod/go-version/dannymassa/dead-link-linter)](https://img.shields.io/github/go-mod/go-version/dannymassa/dead-link-linter)
 [![release](https://img.shields.io/github/v/release/DannyMassa/dead-link-linter)](https://img.shields.io/github/v/release/DannyMassa/dead-link-linter)
 </div>
 
@@ -25,8 +24,7 @@
 <summary>Table of Contents</summary>
 
 
-- [About](#about)
-  - [Built With](#built-with)
+- [TL;DR](#TL;DR)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -41,19 +39,14 @@
 
 ---
 
-## About
+## TL;DR
 
-### Built With
-
-> **[?]**
-> Please provide the technologies that are used in the project.
 
 ## Getting Started
 
 ### Prerequisites
 
-> **[?]**
-> What are the project requirements/dependencies?
+**None!** The dead-link-linter runs as a standalone executable
 
 ### Installation
 
@@ -66,6 +59,15 @@
 > How does one go about using it?
 > Provide various use cases and code examples here.
 
+Key            | Default | Description
+------         | ------  |----------
+directories    | ["./"]  | $
+fileExtensions | [".markdown", ".mdown", ".mkdn", "md", "mkd", ".mdwn", ".mdtxt", ".mdtext", ".text", ".txt", "rst"]        | (
+goldenURL      | https://google.com        | ^
+ignored        | []        |
+maxFailures    | 0        |
+successLogs    | true        |
+
 ## Roadmap
 
 See the [open issues](https://github.com/DannyMassa/dead-link-linter/issues) for a list of proposed features (and known issues).
@@ -77,7 +79,7 @@ See the [open issues](https://github.com/DannyMassa/dead-link-linter/issues) for
 
 First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
 
-We have set up a separate document containing our [contribution guidelines](../dead-link-linter/docs/CONTRIBUTING.md).
+We have set up a separate document containing our [contribution guidelines](docs/CONTRIBUTING.md).
 
 Thank you for being involved!
 
