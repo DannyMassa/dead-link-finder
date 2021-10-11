@@ -59,14 +59,15 @@
 > How does one go about using it?
 > Provide various use cases and code examples here.
 
-Key            | Default | Description
-------         | ------  |----------
-directories    | ["./"]  | $
-fileExtensions | [".markdown", ".mdown", ".mkdn", "md", "mkd", ".mdwn", ".mdtxt", ".mdtext", ".text", ".txt", "rst"]        | (
-goldenURL      | https://google.com        | ^
-ignored        | []        |
-maxFailures    | 0        |
-successLogs    | true        |
+Key               | CLI                  |Default             | Description
+------            | ------               |------              |----------
+directories       | --directories        | ["./"]             | Directories to run the linter against (recursive; relative and absolute paths 
+fileExtensions    | --file_extensions    | [".markdown", ".mdown", ".mkdn", "md", "mkd", ".mdwn", ".mdtxt", ".mdtext", ".text", ".txt", "rst"]        | (
+goldenURL         | --golden_url         | https://google.com | A url that will be tested first, and upon failure will cause an unhealthy exit from the program
+ignored           | --ignored            | []                 |
+individualTimeout | --individual_timeout | 10                 | wow
+maxFailures       | --max_failures       | 0                  | The number of URLs allowed to have a ```FAILURE``` status
+logVerbosity      | --log_verbosity      | 1                  | [0, 1] a numerical value for 
 
 ## Roadmap
 

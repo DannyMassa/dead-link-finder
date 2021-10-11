@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/DannyMassa/dead-link-linter/controllers"
-	"github.com/DannyMassa/dead-link-linter/services"
 	"os"
 	"time"
+
+	"github.com/DannyMassa/dead-link-linter/controllers"
+	"github.com/DannyMassa/dead-link-linter/services"
 )
 
 var (
@@ -19,7 +20,7 @@ func main() {
 
 	// Testing against golden URL
 	if !urlService.LinkLivenessChecker(c.GoldenURL) {
-		os.Exit(2)
+		os.Exit(5)
 	}
 
 	err := controllers.Controller.Run(c)

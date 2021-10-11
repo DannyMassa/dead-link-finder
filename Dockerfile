@@ -11,9 +11,9 @@ RUN go version
 RUN go mod download
 COPY . .
 RUN go test -v ./...
-RUN go build -tags netgo -o dead-link-finder ./
+RUN go build -tags netgo -o dead-link-linter ./
 
 
 FROM alpine:latest as app
 RUN apk --no-cache add ca-certificates curl openssh-client git
-COPY --from=builder /app/dead-link-finder /usr/bin/dead-link-finder
+COPY --from=builder /app/dead-link-linter /usr/bin/dead-link-linter
