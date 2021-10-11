@@ -4,7 +4,6 @@ fileExtensions:
   - ".md"
 goldenURL: "https://google.com"
 ignored:
-  - "https://review.opendev.org/airship/airshipctl"
+  - "https://google.com"
 maxFailures: 0
-# 0 or 1
 logVerbosity: 1
