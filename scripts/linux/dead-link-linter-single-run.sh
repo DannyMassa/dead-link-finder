@@ -1,5 +1,5 @@
 set -xe
-: "${LINTER_VERSION:="1.0.0"}"
+: "${LINTER_VERSION:="1.0.1"}"
 : "${OS_TYPE:="linux"}"
 : "${ARCHITECTURE:="amd64"}"
 
