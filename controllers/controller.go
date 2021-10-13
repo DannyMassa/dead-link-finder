@@ -18,7 +18,7 @@ var (
 	urlService                         services.URLService       = &services.URLServiceImpl{}
 	directoryService                   services.DirectoryService = &services.DirectoryServiceImpl{}
 	Controller                         linkController            = &LinkControllerImpl{
-		resultsChan: make(chan *types.URL, 1000),
+		resultsChan: make(chan *types.URL, 2048),
 		results:     []*types.URL{},
 	}
 )
