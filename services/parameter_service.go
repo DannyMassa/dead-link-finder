@@ -57,7 +57,7 @@ func (p ParameterServiceImpl) rectifyConfigurations(priorityConfig types.Config,
 }
 
 func (p ParameterServiceImpl) parseCLIConfiguration() types.Config {
-	cliConfig := types.Config{}
+	cliConfig := types.NewConfig()
 	flag.StringArrayVar(&cliConfig.Directories, "directories", []string{}, "Fill in Later")
 	flag.StringArrayVar(&cliConfig.FileExtensions, "file_extensions ", []string{}, "Fill in Later")
 	flag.StringVar(&cliConfig.GoldenURL, "golden_url", "", "Fill in Later")
@@ -83,7 +83,7 @@ func (p ParameterServiceImpl) parseDefaultConfiguration() types.Config {
 }
 
 func (p ParameterServiceImpl) parseFileConfiguration() types.Config {
-	fileConfig := types.Config{}
+	fileConfig := types.NewConfig()
 	buf, err := ioutil.ReadFile(".deadlink")
 
 	if err != nil {

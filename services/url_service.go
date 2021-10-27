@@ -29,7 +29,7 @@ func (u URLServiceImpl) URLScraper(file string) []string {
 	fileString := string(fileByteSlice)
 	var urlList []string
 
-	rex := regexp.MustCompile(`(http|https|ftp|mailto|file|data|irc):(//([0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+@)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(:[0-9]+)?)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(\?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?(#[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?`) //nolint
+	rex := regexp.MustCompile(`(http|https):(//([0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+@)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(:[0-9]+)?)?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]]+(\?[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?(#[0-9a-zA-Z-._~?/#!@$%^&*:\[\]])?`) //nolint
 	urls = rex.FindAllStringSubmatch(fileString, -1)
 
 	for i := 1; i < len(urls); i++ {
