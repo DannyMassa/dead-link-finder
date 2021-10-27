@@ -3,13 +3,13 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	"github.com/DannyMassa/dead-link-linter/services"
+	"github.com/DannyMassa/dead-link-linter/types"
 	"log"
+	"os"
 	"sort"
 	"strings"
 	"sync"
-
-	"github.com/DannyMassa/dead-link-linter/services"
-	"github.com/DannyMassa/dead-link-linter/types"
 )
 
 var (
@@ -18,7 +18,7 @@ var (
 	urlService                         services.URLService       = &services.URLServiceImpl{}
 	directoryService                   services.DirectoryService = &services.DirectoryServiceImpl{}
 	Controller                         linkController            = &LinkControllerImpl{
-		resultsChan: make(chan *types.URL, 2048),
+		resultsChan: make(chan *types.URL, 512),
 		results:     []*types.URL{},
 	}
 )
@@ -135,6 +135,7 @@ func (l *LinkControllerImpl) urlCheck(directory string, file string, url string,
 		Link:      url,
 		Directory: directory,
 		File:      file,
+		Result:    "",
 	}
 	if l.contains(url, config.Ignored) { //nolint
 		tmp.Result = "SKIPPED"
@@ -150,7 +151,8 @@ func (l *LinkControllerImpl) urlCheck(directory string, file string, url string,
 	select {
 	case l.resultsChan <- &tmp:
 	default:
-		log.Println("MAYDAY")
+		log.Println("Channel Overload, Dead Link Linter must exit")
+		os.Exit(6)
 	}
 }
 

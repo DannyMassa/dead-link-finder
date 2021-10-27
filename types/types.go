@@ -10,6 +10,18 @@ type Config struct {
 	LogVerbosity      int      `yaml:"logVerbosity"`
 }
 
+func NewConfig() Config {
+	return Config{
+		Directories:       nil,
+		FileExtensions:    nil,
+		GoldenURL:         "",
+		Ignored:           nil,
+		IndividualTimeout: -1,
+		MaxFailures:       -1,
+		LogVerbosity:      -1,
+	}
+}
+
 type URL struct {
 	Link      string
 	Result    string
