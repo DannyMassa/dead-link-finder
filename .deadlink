@@ -6,4 +6,4 @@ goldenURL: "https://google.com"
 ignored:
   - "https://google.com"
 maxFailures: 0
-logVerbosity: 1
+logVerbosity: 2

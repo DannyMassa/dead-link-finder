@@ -1,15 +1,12 @@
 package controllers
 
 import (
-	"errors"
-	"fmt"
-	"github.com/DannyMassa/dead-link-linter/services"
-	"github.com/DannyMassa/dead-link-linter/types"
 	"log"
 	"os"
-	"sort"
-	"strings"
 	"sync"
+
+	"github.com/DannyMassa/dead-link-linter/services"
+	"github.com/DannyMassa/dead-link-linter/types"
 )
 
 var (
@@ -17,6 +14,7 @@ var (
 	successCount, failCount, skipCount                           = 0, 0, 0
 	urlService                         services.URLService       = &services.URLServiceImpl{}
 	directoryService                   services.DirectoryService = &services.DirectoryServiceImpl{}
+	logService                         services.LogService       = &services.LogServiceImpl{}
 	Controller                         linkController            = &LinkControllerImpl{
 		resultsChan: make(chan *types.URL, 512),
 		results:     []*types.URL{},
@@ -32,67 +30,6 @@ type LinkControllerImpl struct {
 	results     []*types.URL
 }
 
-func (l *LinkControllerImpl) printResults(config *types.Config) error {
-	tmpUrls := l.results
-	sort.SliceStable(tmpUrls, func(i, j int) bool {
-		less := false
-		// Sort by Directory
-		if strings.EqualFold(tmpUrls[i].Directory, tmpUrls[j].Directory) { //nolint
-			// If Directory == Directory, sort by File
-			if strings.EqualFold(tmpUrls[i].File, tmpUrls[j].File) { //nolint
-				// If Directory == Directory && File == File, sort alphabetically
-				if strings.ToLower(tmpUrls[i].Link) < strings.ToLower(tmpUrls[j].Link) {
-					less = true
-				} else {
-					less = false
-				}
-			} else if strings.ToLower(tmpUrls[i].File) < strings.ToLower(tmpUrls[j].File) {
-				less = true
-			} else {
-				less = false
-			}
-		} else if strings.ToLower(tmpUrls[i].Directory) < strings.ToLower(tmpUrls[j].Directory) {
-			less = true
-		} else {
-			less = false
-		}
-
-		return less
-	})
-
-	if config.LogVerbosity <= 1 {
-		for i := len(tmpUrls) - 1; i >= 0; i-- {
-			if tmpUrls[i].Result == "SUCCESS" {
-				tmpUrls = append(tmpUrls[:i], tmpUrls[i+1:]...)
-			}
-		}
-	}
-
-	for i := 0; i < len(tmpUrls); i++ {
-		if i == 0 {
-			fmt.Printf("%s\n", tmpUrls[i].Directory)
-			fmt.Printf("    %s\n", tmpUrls[i].File)
-			fmt.Printf("        %s - %s\n", tmpUrls[i].Result, tmpUrls[i].Link)
-		} else {
-			if tmpUrls[i].Directory != tmpUrls[i-1].Directory {
-				fmt.Printf("%s\n", tmpUrls[i].Directory)
-			}
-			if tmpUrls[i].File != tmpUrls[i-1].File {
-				fmt.Printf("    %s\n", tmpUrls[i].File)
-			}
-			fmt.Printf("        %s - %s\n", tmpUrls[i].Result, tmpUrls[i].Link)
-		}
-	}
-
-	fmt.Printf("\n\nSUCCESS: %d     FAILED: %d     SKIPPED: %d\n", successCount, failCount, skipCount)
-
-	if failCount > config.MaxFailures {
-		return errors.New("wow")
-	}
-
-	return nil
-}
-
 func (l *LinkControllerImpl) Run(config *types.Config) error {
 	go l.manageResults()
 	waitGroup.Add(len(config.Directories))
@@ -103,7 +40,7 @@ func (l *LinkControllerImpl) Run(config *types.Config) error {
 	waitGroup.Wait()
 	close(l.resultsChan)
 
-	return l.printResults(config)
+	return logService.PrintResults(l.results, config)
 }
 
 // manageResults runs the serve loop, dispatching for checks that need it.

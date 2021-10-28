@@ -145,7 +145,7 @@ goldenURL         | --golden_url         | https://google.com | A url that will 
 ignored           | --ignored            | []                 |A list of (string) URLs that will be ignored if they are found by the URL parser. This is the suggested way to manage false positives. i.e. example URLs & example IP Addresses from your documentation.
 individualTimeout | --individual_timeout | 10                 | **[1, 2147483647)** The amount of time, in seconds, allowed for a web request 
 maxFailures       | --max_failures       | 0                  | **[0, 2147483647)** The number of URLs allowed to have a ```FAILURE``` status before the linter exits with an unhealthy code. (exit code ```1```) 
-logVerbosity      | --log_verbosity      | 1                  | **[0, 1]** a numerical value describing if detailed logs are printed. ```0 ``` indicates failure only logs, ```1``` indicates success logs will be included 
+logVerbosity      | --log_verbosity      | 1                  | **[0, 2]** a numerical value describing if detailed logs are printed. ```0 ``` indicates failure only logs, ```1``` indicates skipped urls will be included, ```2``` indicates success urls will be included
 
 ## Roadmap
 
